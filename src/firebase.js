@@ -12,6 +12,14 @@ const firebaseConfig = {
   measurementId: "G-YVHMKY3TDY"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+
+// Initialize Firebase Authentication and Firestore
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Log Firebase initialization (for debugging)
+console.log('Firebase initialized:', app.name);
+
+export { auth, db };
