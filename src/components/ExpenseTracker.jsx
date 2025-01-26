@@ -46,9 +46,9 @@ export default function ExpenseTracker({ expenses, setExpenses, remainingBudget,
   };
 
   return (
-    <div className="expense-tracker">
-      <h3>Add Expense</h3>
-      <form onSubmit={addExpense}>
+    <div className="expense-tracker" style={styles.container}>
+      <h3 style={styles.heading}>Add Expense</h3>
+      <form onSubmit={addExpense} style={styles.form}>
         <input
           type="number"
           value={amount}
@@ -56,18 +56,84 @@ export default function ExpenseTracker({ expenses, setExpenses, remainingBudget,
           placeholder="Amount"
           min="0"
           step="0.01"
+          style={styles.input}
         />
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          style={styles.select}
+        >
           <option value="Food">Food</option>
           <option value="Transport">Transport</option>
           <option value="Entertainment">Entertainment</option>
         </select>
-        <button type="submit">Add Expense</button>
+        <button type="submit" style={styles.button}>
+          Add Expense
+        </button>
       </form>
 
       {/* Display error or success messages */}
-      {error && <p className="error-message">{error}</p>}
-      {success && <p className="success-message">{success}</p>}
+      {error && <p style={styles.errorMessage}>{error}</p>}
+      {success && <p style={styles.successMessage}>{success}</p>}
     </div>
   );
 }
+
+// Styles for the component
+const styles = {
+  container: {
+    backgroundColor: '#f9f9f9',
+    padding: '20px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    maxWidth: '400px',
+    margin: '0 auto',
+  },
+  heading: {
+    fontSize: '24px',
+    marginBottom: '20px',
+    textAlign: 'center',
+    color: '#333',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+  },
+  input: {
+    padding: '10px',
+    borderRadius: '4px',
+    border: '1px solid #ccc',
+    fontSize: '16px',
+  },
+  select: {
+    padding: '10px',
+    borderRadius: '4px',
+    border: '1px solid #ccc',
+    fontSize: '16px',
+    backgroundColor: '#fff',
+  },
+  button: {
+    padding: '10px',
+    borderRadius: '4px',
+    border: 'none',
+    backgroundColor: '#007bff',
+    color: '#fff',
+    fontSize: '16px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+  },
+  buttonHover: {
+    backgroundColor: '#0056b3',
+  },
+  errorMessage: {
+    color: '#dc3545',
+    textAlign: 'center',
+    marginTop: '10px',
+  },
+  successMessage: {
+    color: '#28a745',
+    textAlign: 'center',
+    marginTop: '10px',
+  },
+};

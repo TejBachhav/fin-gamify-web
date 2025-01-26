@@ -30,11 +30,20 @@ export default function BudgetGame() {
     }
 
     try {
+      // Calculate the updated budget by adding the new budget to the existing budget
+      const updatedBudget = budget + Number(newBudget);
+
+      // Update Firestore with the new budget and remaining budget
       await updateDoc(doc(db, 'users', auth.currentUser.uid), {
-        budget: Number(newBudget),
-        remainingBudget: Number(newBudget), // Reset remaining budget when budget is updated
+        budget: updatedBudget,
+        remainingBudget: remainingBudget + Number(newBudget), // Add to remaining budget as well
       });
 
+      // Update local state
+      setBudget(updatedBudget);
+      setRemainingBudget(remainingBudget + Number(newBudget));
+
+      // Clear error and show success message
       setError('');
       setSuccess('Budget updated successfully!');
       setTimeout(() => setSuccess(''), 3000);

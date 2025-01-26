@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { db, auth } from '../firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
+import { Link } from 'react-router-dom'; // Add this for navigation
 import BudgetGame from '../components/BudgetGame';
 import ExpenseTracker from '../components/ExpenseTracker';
 import ExpenseChart from '../components/ExpenseChart';
-import './Dashboard.css'; // Add this for dashboard-specific styles
+import './Dashboard.css';
 
 export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
@@ -50,6 +51,15 @@ export default function Dashboard() {
             remainingBudget={remainingBudget}
             setRemainingBudget={setRemainingBudget}
           />
+          {/* Navigation Buttons */}
+          <div className="dashboard-navigation">
+            <Link to="/quiz" className="nav-button">
+              Take Quiz
+            </Link>
+            <Link to="/chatbot" className="nav-button">
+              Chat with Advisor
+            </Link>
+          </div>
         </div>
         <div className="dashboard-right">
           <ExpenseChart expenses={expenses} />

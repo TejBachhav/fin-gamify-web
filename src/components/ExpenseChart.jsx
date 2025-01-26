@@ -2,10 +2,12 @@ import { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
 export default function ExpenseChart({ expenses }) {
-  const chartRef = useRef(null);
+  const chartRef = useRef(null); // Ref for the canvas element
+  const chartInstance = useRef(null); // Ref to store the chart instance
 
   useEffect(() => {
     if (expenses.length > 0) {
+      // Calculate category totals
       const categories = {};
       expenses.forEach((expense) => {
         if (categories[expense.category]) {
@@ -15,6 +17,7 @@ export default function ExpenseChart({ expenses }) {
         }
       });
 
+      // Prepare chart data
       const chartData = {
         labels: Object.keys(categories),
         datasets: [
@@ -31,13 +34,28 @@ export default function ExpenseChart({ expenses }) {
         ],
       };
 
+      // Get the canvas context
       const ctx = chartRef.current.getContext('2d');
-      new Chart(ctx, {
+
+      // Destroy the previous chart instance if it exists
+      if (chartInstance.current) {
+        chartInstance.current.destroy();
+      }
+
+      // Create a new chart instance
+      chartInstance.current = new Chart(ctx, {
         type: 'pie',
         data: chartData,
       });
     }
-  }, [expenses]);
+
+    // Cleanup function to destroy the chart when the component unmounts
+    return () => {
+      if (chartInstance.current) {
+        chartInstance.current.destroy();
+      }
+    };
+  }, [expenses]); // Re-run the effect when `expenses` changes
 
   return <canvas ref={chartRef} />;
 }

@@ -129,16 +129,7 @@ body {
   color: #333;
 }
 
-.expense-tracker input {
-  display: block;
-  width: 100%;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
+.expense-tracker input,
 .expense-tracker select {
   display: block;
   width: 100%;
@@ -167,7 +158,7 @@ body {
   background-color: #138496;
 }
 
-/* FinancialLiteracy Component Styles */
+/* FinancialLiteracy Component Styles
 .financial-literacy {
   max-width: 600px;
   margin: 2rem auto;
@@ -206,10 +197,26 @@ body {
   color: #333;
 }
 
+.financial-literacy .quiz .question {
+  margin-bottom: 1.5rem;
+}
+
 .financial-literacy .quiz label {
-  display: block;
+  display: flex;
+  align-items: left;
   margin: 0.5rem 0;
   color: #555;
+  font-size: 14px;
+}
+
+.financial-literacy .quiz input[type="radio"] {
+  margin-right: 1px;
+}
+
+.financial-literacy .quiz .answer-feedback {
+  margin-top: 0.5rem;
+  color: #28a745;
+  font-size: 14px;
 }
 
 .financial-literacy .quiz button {
@@ -229,6 +236,17 @@ body {
 .financial-literacy .quiz button:hover {
   background-color: #0056b3;
 }
+
+.financial-literacy .quiz button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.financial-literacy .quiz .quiz-score {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #333;
+} */
 
 /* FinancialAdvisor Component Styles */
 .ai-advisor {
@@ -291,224 +309,4 @@ body {
   height: 100vh;
   font-size: 1.5rem;
   color: #007bff;
-}
-
-
-/* Financial Literacy Component */
-.financial-literacy {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  text-align: left;
-}
-
-.financial-literacy h3 {
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.financial-literacy .content {
-  margin-bottom: 2rem;
-}
-
-.financial-literacy .content p {
-  margin-bottom: 1rem;
-  color: #555;
-}
-
-.financial-literacy .content a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.financial-literacy .content a:hover {
-  text-decoration: underline;
-}
-
-.financial-literacy .quiz {
-  margin-top: 2rem;
-}
-
-.financial-literacy .quiz h4 {
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.financial-literacy .quiz .question {
-  margin-bottom: 1.5rem;
-}
-
-.financial-literacy .quiz label {
-  display: block;
-  margin: 0.5rem 0;
-  color: #555;
-}
-
-.financial-literacy .quiz input[type="radio"] {
-  margin-right: 0.5rem;
-}
-
-.financial-literacy .quiz .answer-feedback {
-  margin-top: 0.5rem;
-  color: #28a745;
-}
-
-.financial-literacy .quiz button {
-  display: block;
-  width: 100%;
-  padding: 0.75rem;
-  margin: 1rem 0;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.financial-literacy .quiz button:hover {
-  background-color: #0056b3;
-}
-
-.financial-literacy .quiz button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.financial-literacy .quiz .quiz-score {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  color: #333;
-}
-
-/* Expense Tracker Component */
-.expense-tracker {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  text-align: center;
-}
-
-.expense-tracker h3 {
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.expense-tracker input,
-.expense-tracker select {
-  display: block;
-  width: 100%;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.expense-tracker input:focus,
-.expense-tracker select:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-}
-
-.expense-tracker button {
-  display: block;
-  width: 100%;
-  padding: 0.75rem;
-  margin: 0.5rem 0;
-  background-color: #17a2b8;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.expense-tracker button:hover {
-  background-color: #138496;
-}
-
-.expense-tracker .error-message {
-  color: #dc3545;
-  margin-top: 1rem;
-}
-
-.expense-tracker .success-message {
-  color: #28a745;
-  margin-top: 1rem;
-}
-
-/* Budget Game Component */
-.budget-game {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  text-align: center;
-}
-
-.budget-game h3 {
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.budget-game .points {
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-  color: #28a745;
-}
-
-.budget-game input {
-  display: block;
-  width: 100%;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.budget-game input:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-}
-
-.budget-game button {
-  display: block;
-  width: 100%;
-  padding: 0.75rem;
-  margin: 0.5rem 0;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.budget-game button:hover {
-  background-color: #0056b3;
-}
-
-.budget-game .error-message {
-  color: #dc3545;
-  margin-top: 1rem;
-}
-
-.budget-game .success-message {
-  color: #28a745;
-  margin-top: 1rem;
 }
