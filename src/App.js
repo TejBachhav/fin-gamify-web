@@ -3,37 +3,20 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { db, auth } from './firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
 import Auth from './components/Auth';
-import BudgetGame from './components/BudgetGame';
-import ExpenseTracker from './components/ExpenseTracker';
-import FinancialLiteracy from './components/FinancialLiteracy';
-import FinancialAdvisor from './components/FinancialAdvisor';
+import Dashboard from './pages/Dashboard';
 import './App.css';
 
 function App() {
-  const [expenses, setExpenses] = useState([]);
-  const [points, setPoints] = useState(0);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
 
-  // Fetch user data from Firestore
+  // Check if user is logged in
   useEffect(() => {
-    if (auth.currentUser) {
-      const userRef = doc(db, 'users', auth.currentUser.uid);
-      const unsubscribe = onSnapshot(userRef, (doc) => {
-        if (doc.exists()) {
-          setExpenses(doc.data().expenses || []);
-          setPoints(doc.data().points || 0);
-        }
-        setLoading(false); // Set loading to false after data is fetched
-      });
-
-      // Cleanup subscription on unmount
-      return () => unsubscribe();
-    } else {
-      setLoading(false); // Set loading to false if no user is logged in
-    }
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setLoading(false);
+    });
+    return () => unsubscribe();
   }, []);
 
-  // Show loading spinner while data is being fetched
   if (loading) {
     return (
       <div className="loading-spinner">
@@ -46,21 +29,8 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          {/* Auth Route */}
           <Route path="/" element={<Auth />} />
-
-          {/* Dashboard Route */}
-          <Route
-            path="/dashboard"
-            element={
-              <>
-                <BudgetGame />
-                <ExpenseTracker expenses={expenses} points={points} />
-                <FinancialLiteracy />
-                <FinancialAdvisor />
-              </>
-            }
-          />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
     </Router>

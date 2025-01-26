@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { db, auth } from '../firebase';
-import { doc, setDoc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 
 export default function BudgetGame() {
   const [budget, setBudget] = useState(0);
-  const [points, setPoints] = useState(0);
-  const [error, setError] = useState(''); // For error messages
-  const [success, setSuccess] = useState(''); // For success messages
+  const [remainingBudget, setRemainingBudget] = useState(0);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   // Fetch user data from Firestore
   useEffect(() => {
@@ -15,36 +15,28 @@ export default function BudgetGame() {
       const unsubscribe = onSnapshot(budgetRef, (doc) => {
         if (doc.exists()) {
           setBudget(doc.data().budget || 0);
-          setPoints(doc.data().points || 0);
+          setRemainingBudget(doc.data().remainingBudget || 0);
         }
       });
       return () => unsubscribe();
     }
   }, []);
 
-  // Update budget and award points
+  // Update budget and remaining budget
   const updateBudget = async (newBudget) => {
-    // Validate input
     if (!newBudget || isNaN(newBudget) || Number(newBudget) <= 0) {
       setError('Please enter a valid budget amount.');
       return;
     }
 
     try {
-      await setDoc(
-        doc(db, 'users', auth.currentUser.uid),
-        {
-          budget: Number(newBudget),
-          points: points + 50, // Award 50 points for updating the budget
-        },
-        { merge: true }
-      );
+      await updateDoc(doc(db, 'users', auth.currentUser.uid), {
+        budget: Number(newBudget),
+        remainingBudget: Number(newBudget), // Reset remaining budget when budget is updated
+      });
 
-      // Show success message
       setError('');
       setSuccess('Budget updated successfully!');
-
-      // Clear success message after 3 seconds
       setTimeout(() => setSuccess(''), 3000);
     } catch (error) {
       console.error('Error updating budget:', error);
@@ -55,7 +47,7 @@ export default function BudgetGame() {
   return (
     <div className="budget-game">
       <h3>Monthly Budget: ${budget}</h3>
-      <div className="points">Points: {points}</div>
+      <h3>Remaining Budget: ${remainingBudget}</h3>
       <input
         type="number"
         value={budget}
@@ -65,7 +57,7 @@ export default function BudgetGame() {
         step="0.01"
       />
       <button onClick={() => updateBudget(budget)}>
-        Update Budget (+50 points)
+        Update Budget
       </button>
 
       {/* Display error or success messages */}

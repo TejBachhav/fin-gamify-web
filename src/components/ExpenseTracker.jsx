@@ -2,42 +2,42 @@ import { useState } from 'react';
 import { db, auth } from '../firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 
-export default function ExpenseTracker({ expenses, points }) {
+export default function ExpenseTracker({ expenses, setExpenses, remainingBudget, setRemainingBudget }) {
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('Food');
-  const [error, setError] = useState(''); // For error messages
-  const [success, setSuccess] = useState(''); // For success messages
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const addExpense = async (e) => {
     e.preventDefault();
 
-    // Validate input
     if (!amount || isNaN(amount) || Number(amount) <= 0) {
       setError('Please enter a valid amount.');
       return;
     }
 
+    if (Number(amount) > remainingBudget) {
+      setError('Expense exceeds remaining budget.');
+      return;
+    }
+
     try {
       const userRef = doc(db, 'users', auth.currentUser.uid);
+      const newExpense = {
+        amount: Number(amount),
+        category,
+        date: new Date().toISOString(),
+      };
+
       await updateDoc(userRef, {
-        expenses: [
-          ...expenses,
-          {
-            amount: Number(amount),
-            category,
-            date: new Date().toISOString(),
-          },
-        ],
-        points: points + 10, // Award 10 points for adding an expense
+        expenses: [...expenses, newExpense],
+        remainingBudget: remainingBudget - Number(amount),
       });
 
-      // Reset form and show success message
       setAmount('');
       setCategory('Food');
       setError('');
       setSuccess('Expense added successfully!');
-
-      // Clear success message after 3 seconds
       setTimeout(() => setSuccess(''), 3000);
     } catch (error) {
       console.error('Error adding expense:', error);
@@ -62,7 +62,7 @@ export default function ExpenseTracker({ expenses, points }) {
           <option value="Transport">Transport</option>
           <option value="Entertainment">Entertainment</option>
         </select>
-        <button type="submit">Add Expense (+10 points)</button>
+        <button type="submit">Add Expense</button>
       </form>
 
       {/* Display error or success messages */}
